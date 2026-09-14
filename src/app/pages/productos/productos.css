@@ -1,0 +1,151 @@
+.productos-page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  padding: 40px 60px;
+  background: #fdf6ec;
+  align-items: start;
+}
+
+.filtros {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.filtros h3 {
+  color: #2b1a10;
+  margin-bottom: 16px;
+}
+
+.filtro-grupo {
+  margin-bottom: 20px;
+}
+
+.filtro-grupo h4 {
+  color: #b8862f;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.filtro-opcion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  color: #4a3826;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.productos-contenido h2 {
+  color: #2b1a10;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.producto-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.producto-imagen {
+  background: #eee2cc;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.producto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.selector-presentacion {
+  width: 100%;
+  margin: 8px 0;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.presentacion-unica {
+  color: #777;
+  font-size: 0.85rem;
+  margin: 8px 0;
+}
+
+.producto-card .precio {
+  color: #6b4f2a;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.btn-completo {
+  width: 100%;
+  background: #b8862f;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mensaje-vacio {
+  color: #999;
+  font-style: italic;
+}
+
+.paginacion {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.paginacion button {
+  background: #fff;
+  border: 1px solid #e0d4bf;
+  color: #2b1a10;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.paginacion button.activo {
+  background: #2b1a10;
+  color: #fff;
+}
+
+.paginacion button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .productos-page {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,108 @@
+<div class="login-page">
+
+  <div class="login-card">
+
+    <div class="tabs">
+      <button
+        type="button"
+        [class.active]="pestanaActiva() === 'login'"
+        (click)="cambiarPestana('login')"
+      >
+        Iniciar sesión
+      </button>
+      <button
+        type="button"
+        [class.active]="pestanaActiva() === 'registro'"
+        (click)="cambiarPestana('registro')"
+      >
+        Crear cuenta
+      </button>
+    </div>
+
+    @if (error()) {
+      <p class="error-msg">{{ error() }}</p>
+    }
+
+    @if (pestanaActiva() === 'login') {
+      <form (ngSubmit)="iniciarSesion()">
+
+        <label for="login-email">Correo electrónico</label>
+        <input
+          id="login-email"
+          type="email"
+          name="email"
+          placeholder="juan@correo.com"
+          [(ngModel)]="credencialesLogin.email"
+          required
+        />
+
+        <label for="login-password">Contraseña</label>
+        <input
+          id="login-password"
+          type="password"
+          name="password"
+          placeholder="••••••••"
+          [(ngModel)]="credencialesLogin.password"
+          required
+        />
+
+        <button type="submit" [disabled]="cargando()">
+          {{ cargando() ? 'Ingresando...' : 'Entrar' }}
+        </button>
+
+      </form>
+    }
+
+    @if (pestanaActiva() === 'registro') {
+      <form (ngSubmit)="registrarse()">
+
+        <label for="reg-nombre">Nombre completo</label>
+        <input
+          id="reg-nombre"
+          type="text"
+          name="nombre"
+          placeholder="Juan Pérez"
+          [(ngModel)]="formularioRegistro.nombre"
+          required
+        />
+
+        <label for="reg-email">Correo electrónico</label>
+        <input
+          id="reg-email"
+          type="email"
+          name="email"
+          placeholder="juan@correo.com"
+          [(ngModel)]="formularioRegistro.email"
+          required
+        />
+
+        <label for="reg-telefono">Teléfono</label>
+        <input
+          id="reg-telefono"
+          type="text"
+          name="telefono"
+          placeholder="311 405 6665"
+          [(ngModel)]="formularioRegistro.telefono"
+          required
+        />
+
+        <label for="reg-password">Contraseña</label>
+        <input
+          id="reg-password"
+          type="password"
+          name="password"
+          placeholder="Mínimo 8 caracteres"
+          [(ngModel)]="formularioRegistro.password"
+          required
+        />
+
+        <button type="submit" [disabled]="cargando()">
+          {{ cargando() ? 'Creando cuenta...' : 'Crear cuenta' }}
+        </button>
+
+      </form>
+    }
+
+  </div>
+
+</div>

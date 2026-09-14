@@ -1,0 +1,61 @@
+<header class="header">
+
+  <div class="header-container">
+
+    <div class="brand">
+
+      <a routerLink="/" class="logo">
+        <span>🍫</span>
+      </a>
+
+      <div class="brand-text">
+        <h1>PILAR DE ORO</h1>
+        <p>Chocolate Artesanal</p>
+      </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="Buscar productos..."
+          [(ngModel)]="terminoBusqueda"
+          (keyup.enter)="buscar()"
+        />
+
+        <span class="search-icon" (click)="buscar()">⌕</span>
+      </div>
+
+
+      @if (authService.estaLogueado()) {
+        <button class="account-btn" [routerLink]="['/perfil']">
+          <span>{{ authService.usuarioActual()?.nombre }}</span>
+        </button>
+        <button class="account-btn" (click)="cerrarSesion()">
+          <span>Salir</span>
+        </button>
+      } @else {
+        <button class="account-btn" [routerLink]="['/login']">
+          <span>Mi cuenta</span>
+        </button>
+      }
+
+
+      <button class="cart-btn" [routerLink]="['/carrito']">
+
+        <span>Carrito</span>
+
+        <span class="cart-count">
+          {{ cartService.cantidadTotal() }}
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</header>

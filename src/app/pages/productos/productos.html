@@ -1,0 +1,124 @@
+<div class="productos-page">
+
+  <aside class="filtros">
+
+    <h3>Filtrar por:</h3>
+
+    <div class="filtro-grupo">
+      <h4>Línea</h4>
+      <label class="filtro-opcion" [class.activo]="categoriaSeleccionada() === null">
+        <input
+          type="radio"
+          name="categoria"
+          [checked]="categoriaSeleccionada() === null"
+          (change)="filtrarPorCategoria(null)"
+        />
+        Todas
+      </label>
+      @for (categoria of categorias(); track categoria._id) {
+        <label class="filtro-opcion" [class.activo]="categoriaSeleccionada() === categoria._id">
+          <input
+            type="radio"
+            name="categoria"
+            [checked]="categoriaSeleccionada() === categoria._id"
+            (change)="filtrarPorCategoria(categoria._id!)"
+          />
+          {{ categoria.nombre }}
+        </label>
+      }
+    </div>
+
+    <div class="filtro-grupo">
+      <h4>Tamaño</h4>
+      @for (tamano of tamanosDisponibles; track tamano) {
+        <label class="filtro-opcion">
+          <input
+            type="checkbox"
+            [checked]="tamanoActivo(tamano)"
+            (change)="toggleTamano(tamano)"
+          />
+          {{ tamano }}
+        </label>
+      }
+    </div>
+
+  </aside>
+
+
+  <div class="productos-contenido">
+
+    <h2>
+      @if (terminoBusqueda()) {
+        Resultados para "{{ terminoBusqueda() }}"
+      } @else {
+        Todos nuestros productos
+      }
+    </h2>
+
+    @if (cargando()) {
+      <p class="mensaje-vacio">Cargando productos...</p>
+    } @else if (productosFiltrados().length === 0) {
+      <p class="mensaje-vacio">No se encontraron productos con esos filtros.</p>
+    } @else {
+
+      <div class="productos-grid">
+        @for (producto of productosFiltrados(); track producto._id) {
+          <div class="producto-card">
+
+            <div class="producto-imagen">
+              @if (producto.imagenes && producto.imagenes.length > 0) {
+                <img [src]="producto.imagenes[0]" [alt]="producto.nombre" />
+              } @else {
+                <span class="placeholder">[ {{ producto.nombre }} ]</span>
+              }
+            </div>
+
+            <h3>{{ producto.nombre }}</h3>
+
+            @if (producto.presentaciones && producto.presentaciones.length > 1) {
+              <select
+                class="selector-presentacion"
+                (change)="seleccionarPresentacion(producto._id!, $any($event.target).value)"
+              >
+                @for (presentacion of producto.presentaciones; track presentacion._id) {
+                  <option [value]="presentacion._id">{{ presentacion.peso }}</option>
+                }
+              </select>
+            } @else if (producto.presentaciones && producto.presentaciones.length === 1) {
+              <p class="presentacion-unica">{{ producto.presentaciones[0].peso }}</p>
+            }
+
+            @if (presentacionDe(producto); as presentacion) {
+              <p class="precio">$ {{ presentacion.precio }}</p>
+            }
+
+            <button class="btn-completo" (click)="agregarAlCarrito(producto)">
+              AGREGAR AL CARRITO
+            </button>
+
+          </div>
+        }
+      </div>
+
+      @if (totalPaginas() > 1) {
+        <div class="paginacion">
+          <button (click)="cambiarPagina(paginaActual() - 1)" [disabled]="paginaActual() === 1">‹</button>
+
+          @for (pagina of [].constructor(totalPaginas()); track $index) {
+            <button
+              [class.activo]="paginaActual() === $index + 1"
+              (click)="cambiarPagina($index + 1)"
+            >
+              {{ $index + 1 }}
+            </button>
+          }
+
+          <button (click)="cambiarPagina(paginaActual() + 1)" [disabled]="paginaActual() === totalPaginas()">›</button>
+        </div>
+      }
+
+    }
+
+  </div>
+
+</div>

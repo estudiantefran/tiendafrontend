@@ -1,0 +1,99 @@
+.login-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fdf6ec;
+  padding: 60px 20px;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(43, 26, 16, 0.12);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e0d4bf;
+  margin-bottom: 24px;
+}
+
+.tabs button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #a89584;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tabs button.active {
+  color: #2b1a10;
+  border-bottom-color: #d8a94f;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  color: #2b1a10;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 12px 0 6px;
+}
+
+form input {
+  padding: 10px 12px;
+  border: 1px solid #e0d4bf;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fdf6ec;
+  color: #2b1a10;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #d8a94f;
+  background: #fff;
+}
+
+form button[type="submit"] {
+  margin-top: 24px;
+  background: #2b1a10;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+form button[type="submit"]:hover:not(:disabled) {
+  background: #4a3020;
+}
+
+form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-msg {
+  background: #fce8e6;
+  color: #c0392b;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}

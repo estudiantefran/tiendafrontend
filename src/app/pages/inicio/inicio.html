@@ -1,0 +1,93 @@
+
+<section class="hero">
+
+  <button class="hero-arrow hero-arrow-left" (click)="anteriorSlide()" aria-label="Anterior">‹</button>
+
+  <div class="hero-content">
+    <h1>{{ slides[slideActual()].titulo }}</h1>
+    <p>{{ slides[slideActual()].subtitulo }}</p>
+  </div>
+
+  <button class="hero-arrow hero-arrow-right" (click)="siguienteSlide()" aria-label="Siguiente">›</button>
+
+  <div class="hero-dots">
+    @for (slide of slides; track $index) {
+      <span
+        class="hero-dot"
+        [class.active]="slideActual() === $index"
+        (click)="irASlide($index)"
+      ></span>
+    }
+  </div>
+
+</section>
+
+
+<section class="categorias-section">
+
+  <h2>Nuestras Categorías</h2>
+
+  <div class="categorias-grid">
+    @for (categoria of categorias(); track categoria._id) {
+      <div class="categoria-card">
+        <div class="categoria-imagen">
+          @if (categoria.imagen) {
+            <img [src]="categoria.imagen" [alt]="categoria.nombre" />
+          } @else {
+            <span class="placeholder">[ {{ categoria.nombre }} ]</span>
+          }
+        </div>
+        <h3>{{ categoria.nombre }}</h3>
+        <p>{{ categoria.descripcion }}</p>
+        <a [routerLink]="['/productos']" [queryParams]="{ categoria: categoria._id }">
+          Ver Selección ➔
+        </a>
+      </div>
+    } @empty {
+      <p class="mensaje-vacio">Próximamente nuevas categorías.</p>
+    }
+  </div>
+
+</section>
+
+
+<section class="destacados-section">
+
+  <h2>Productos Destacados</h2>
+
+  <div class="productos-grid">
+    @for (producto of productosDestacados(); track producto._id) {
+      <div class="producto-card">
+
+        <button
+          class="favorito-btn"
+          [class.activo]="esFavorito(producto._id)"
+          (click)="toggleFavorito(producto)"
+          [attr.aria-label]="esFavorito(producto._id) ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+        >
+          {{ esFavorito(producto._id) ? '♥' : '♡' }}
+        </button>
+
+        <div class="producto-imagen">
+          @if (producto.imagenes && producto.imagenes.length > 0) {
+            <img [src]="producto.imagenes[0]" [alt]="producto.nombre" />
+          } @else {
+            <span class="placeholder">[ {{ producto.nombre }} ]</span>
+          }
+        </div>
+
+        <h3>{{ producto.nombre }}</h3>
+
+        @if (precioDesde(producto) !== null) {
+          <p class="precio">Desde $ {{ precioDesde(producto) }}</p>
+        }
+
+        <a [routerLink]="['/productos']" class="btn-detalle">VER DETALLE</a>
+
+      </div>
+    } @empty {
+      <p class="mensaje-vacio">Aún no hay productos destacados.</p>
+    }
+  </div>
+
+</section>      

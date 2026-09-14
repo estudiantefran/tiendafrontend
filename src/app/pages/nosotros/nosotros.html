@@ -1,0 +1,72 @@
+<section class="historia-section">
+
+  <div class="historia-texto">
+    <h1>Nuestra Historia y Autores</h1>
+    <p>
+      Pilar de Oro nació de la pasión de artesanos cordobeses dedicados a rescatar
+      las recetas ancestrales del chocolate con maíz cariaco.
+    </p>
+    <p>
+      Ubicados en Montería, nuestro equipo trabaja directamente con productores
+      locales de cacao para garantizar un comercio justo y un sabor premium que
+      rinda homenaje a nuestras raíces caribeñas.
+    </p>
+  </div>
+
+  <div class="historia-imagen">
+    <span class="placeholder">[ Imagen de Autores / Cacao ]</span>
+  </div>
+
+</section>
+
+
+<section class="contacto-section" id="contacto-form">
+
+  <div class="contacto-card">
+
+    <h2>Escríbenos tu Mensaje</h2>
+
+    @if (error()) {
+      <p class="error-msg">{{ error() }}</p>
+    }
+
+    @if (enviado()) {
+      <p class="exito-msg">¡Gracias! Tu mensaje fue recibido, te contactaremos pronto.</p>
+    }
+
+    <form (ngSubmit)="enviarMensaje()">
+
+      <label for="contacto-nombre">Nombre Completo</label>
+      <input
+        id="contacto-nombre"
+        type="text"
+        name="nombre"
+        placeholder="Ej. Juan Pérez"
+        [(ngModel)]="formulario.nombre"
+      />
+
+      <label for="contacto-email">Correo Electrónico</label>
+      <input
+        id="contacto-email"
+        type="email"
+        name="email"
+        placeholder="juan@correo.com"
+        [(ngModel)]="formulario.email"
+      />
+
+      <label for="contacto-mensaje">Tu Mensaje</label>
+      <textarea
+        id="contacto-mensaje"
+        name="mensaje"
+        rows="4"
+        placeholder="¿En qué te podemos ayudar?"
+        [(ngModel)]="formulario.mensaje"
+      ></textarea>
+
+      <button type="submit">ENVIAR INFORMACIÓN</button>
+
+    </form>
+
+  </div>
+
+</section>

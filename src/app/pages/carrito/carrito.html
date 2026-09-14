@@ -1,0 +1,117 @@
+@if (pedidoConfirmado()) {
+
+  <div class="confirmacion">
+    <h2>¡Gracias por tu compra! 🎉</h2>
+    <p>Tu pedido fue registrado satisfactoriamente. Te redirigiremos al inicio en un momento...</p>
+  </div>
+
+} @else if (!authService.estaLogueado()) {
+
+  <div class="carrito-vacio">
+    <h2>Inicia sesión para ver tu carrito</h2>
+    <p>Necesitas una cuenta para completar tu compra.</p>
+    <a routerLink="/login" class="btn-primario">Iniciar sesión</a>
+  </div>
+
+} @else if (cartService.items().length === 0) {
+
+  <div class="carrito-vacio">
+    <h2>Tu carrito está vacío</h2>
+    <p>Agrega algunos chocolates artesanales desde el catálogo.</p>
+    <a routerLink="/productos" class="btn-primario">Ver productos</a>
+  </div>
+
+} @else {
+
+  <div class="carrito-page">
+
+    <div class="carrito-items">
+
+      <h2>Tu Carrito</h2>
+
+      @for (item of cartService.items(); track item.productoId + item.presentacionId) {
+        <div class="item-card">
+
+          <div class="item-imagen">
+            @if (item.imagen) {
+              <img [src]="item.imagen" [alt]="item.nombre" />
+            } @else {
+              <span class="placeholder">🍫</span>
+            }
+          </div>
+
+          <div class="item-info">
+            <h3>{{ item.nombre }}</h3>
+            <p class="item-peso">{{ item.peso }}</p>
+            <p class="item-precio">$ {{ item.precio }}</p>
+          </div>
+
+          <div class="item-cantidad">
+            <button (click)="disminuirCantidad(item.productoId, item.presentacionId, item.cantidad)">−</button>
+            <span>{{ item.cantidad }}</span>
+            <button (click)="aumentarCantidad(item.productoId, item.presentacionId, item.cantidad)">+</button>
+          </div>
+
+          <p class="item-subtotal">$ {{ item.precio * item.cantidad }}</p>
+
+          <button class="btn-quitar" (click)="quitarItem(item.productoId, item.presentacionId)">✕</button>
+
+        </div>
+      }
+
+    </div>
+
+
+    <div class="carrito-resumen">
+
+      <h3>Resumen del pedido</h3>
+
+      <div class="linea-resumen">
+        <span>Subtotal</span>
+        <span>$ {{ cartService.subtotal() }}</span>
+      </div>
+      <div class="linea-resumen">
+        <span>Envío</span>
+        <span>$ {{ envio() }}</span>
+      </div>
+      <div class="linea-resumen total">
+        <span>Total</span>
+        <span>$ {{ total() }}</span>
+      </div>
+
+      <h4>Dirección de envío</h4>
+
+      <label for="departamento">Departamento</label>
+      <input id="departamento" type="text" [(ngModel)]="direccionEnvio.departamento" placeholder="Bolívar" />
+
+      <label for="ciudad">Ciudad</label>
+      <input id="ciudad" type="text" [(ngModel)]="direccionEnvio.ciudad" placeholder="Cartagena" />
+
+      <label for="barrio">Barrio (opcional)</label>
+      <input id="barrio" type="text" [(ngModel)]="direccionEnvio.barrio" placeholder="Bocagrande" />
+
+      <label for="direccion">Dirección</label>
+      <input id="direccion" type="text" [(ngModel)]="direccionEnvio.direccion" placeholder="Calle 5 #3-45" />
+
+      <h4>Método de pago</h4>
+
+      <select [(ngModel)]="metodoPago">
+        <option value="Contraentrega">Contraentrega</option>
+        <option value="Nequi">Nequi</option>
+        <option value="PSE">PSE</option>
+        <option value="Tarjeta">Tarjeta</option>
+      </select>
+
+      @if (error()) {
+        <p class="error-msg">{{ error() }}</p>
+      }
+
+      <button class="btn-confirmar" (click)="confirmarPedido()" [disabled]="cargando()">
+        {{ cargando() ? 'Procesando...' : 'Confirmar Pedido' }}
+      </button>
+
+    </div>
+
+  </div>
+
+}

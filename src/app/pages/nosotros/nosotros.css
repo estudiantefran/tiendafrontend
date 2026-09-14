@@ -1,0 +1,116 @@
+.historia-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 60px;
+  background: #fdf6ec;
+  align-items: center;
+}
+
+.historia-texto h1 {
+  color: #2b1a10;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.historia-texto p {
+  color: #4a3826;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.historia-imagen {
+  background: #fff;
+  border: 1px solid #e0d4bf;
+  border-radius: 8px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.contacto-section {
+  padding: 40px 60px 60px;
+  background: #fdf6ec;
+  display: flex;
+  justify-content: center;
+  scroll-margin-top: 140px;
+}
+
+.contacto-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 32px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+.contacto-card h2 {
+  text-align: center;
+  color: #2b1a10;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.contacto-card label {
+  display: block;
+  color: #2b1a10;
+  font-weight: 500;
+  margin: 12px 0 6px;
+}
+
+.contacto-card input,
+.contacto-card textarea {
+  width: 100%;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.contacto-card input::placeholder,
+.contacto-card textarea::placeholder {
+  color: #aaa;
+}
+
+.contacto-card button {
+  width: 100%;
+  margin-top: 20px;
+  background: #d8a94f;
+  color: #2b1a10;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.error-msg {
+  color: #c0392b;
+  background: #fce8e6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.exito-msg {
+  color: #1e7e34;
+  background: #e6f4ea;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+  .historia-section {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,21 +1,28 @@
 .hero {
   position: relative;
-  background: #2b1a10;
+  background-color: #2b1a10;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.6s ease-in-out;
   color: #fff;
-  padding: 80px 60px;
+  padding: 100px 60px;
   text-align: center;
   overflow: hidden;
 }
 
 .hero-content h1 {
-  font-size: 2.2rem;
-  margin-bottom: 12px;
-  font-weight: 400;
+  font-size: 2.4rem;
+  margin-bottom: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .hero-content p {
-  color: #d8a94f;
+  color: #f3d9a4;
   font-size: 1.1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 .hero-arrow {
@@ -57,16 +64,19 @@
 .categorias-section,
 .destacados-section {
   padding: 40px 60px;
-  background: #fdf6ec;
+  background: #fdf3ea;
 }
 
 .categorias-section h2,
 .destacados-section h2 {
   color: #2b1a10;
-  border-bottom: 1px solid #e0d4bf;
-  padding-bottom: 12px;
-  margin-bottom: 24px;
-  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+  border-bottom: none;
 }
 
 .categorias-grid {
@@ -78,21 +88,38 @@
 .categoria-card,
 .producto-card {
   background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 0 0 18px;
+  box-shadow: 0 2px 8px rgba(43, 26, 16, 0.08);
   position: relative;
+  overflow: hidden;
+}
+
+.categoria-card h3,
+.producto-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2b1a10;
+  margin: 14px 18px 8px;
+}
+
+.categoria-card p,
+.producto-card p {
+  margin: 0 18px 10px;
+  color: #4a3826;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .categoria-imagen,
 .producto-imagen {
   background: #eee2cc;
-  height: 160px;
+  height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  margin-bottom: 12px;
+  border-radius: 0;
+  margin-bottom: 0;
   overflow: hidden;
 }
 
@@ -109,9 +136,14 @@
 }
 
 .categoria-card a {
+  display: inline-block;
+  margin: 0 18px;
   color: #b8862f;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
 }
 
 .productos-grid {
@@ -122,8 +154,8 @@
 
 .producto-card .precio {
   color: #6b4f2a;
-  font-weight: 500;
-  margin: 8px 0;
+  font-weight: 700;
+  margin: 0 18px 10px;
 }
 
 .favorito-btn {
@@ -138,6 +170,7 @@
   font-size: 1.1rem;
   cursor: pointer;
   color: #999;
+  z-index: 2;
 }
 
 .favorito-btn.activo {
@@ -152,9 +185,10 @@
   text-decoration: none;
   padding: 10px;
   border-radius: 4px;
-  margin-top: 8px;
+  margin: 8px 18px 0;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .mensaje-vacio {

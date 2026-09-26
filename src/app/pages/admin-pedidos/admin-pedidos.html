@@ -1,0 +1,92 @@
+<div class="admin-page">
+
+  <div class="admin-header">
+    <h1>Gestión de Pedidos</h1>
+
+    <select class="filtro-estado" [(ngModel)]="filtroEstado">
+      <option value="Todos">Todos los estados</option>
+      @for (estado of estadosPedido; track estado) {
+        <option [value]="estado">{{ estado }}</option>
+      }
+    </select>
+  </div>
+
+  @if (error()) {
+    <p class="error-msg">{{ error() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje-vacio">Cargando pedidos...</p>
+  } @else if (pedidosFiltrados().length === 0) {
+    <p class="mensaje-vacio">No hay pedidos con ese filtro.</p>
+  } @else {
+
+    @for (pedido of pedidosFiltrados(); track pedido._id) {
+      <div class="pedido-admin-card">
+
+        <div class="pedido-admin-header">
+          <div>
+            <span class="pedido-fecha">{{ pedido.createdAt | date: 'dd MMM yyyy, h:mm a' }}</span>
+            <span class="pedido-id">#{{ pedido._id?.slice(-6) }}</span>
+            <span class="pedido-cliente">{{ nombreCliente(pedido) }}</span>
+          </div>
+          <span class="badge" [class]="claseEstado(pedido.estado)">{{ pedido.estado }}</span>
+        </div>
+
+        <div class="pedido-productos">
+          @for (item of pedido.productos; track item.presentacion) {
+            <div class="pedido-item">
+              <span>{{ nombreProducto(item) }} ({{ item.peso }}) x{{ item.cantidad }}</span>
+              <span>$ {{ item.precio * item.cantidad }}</span>
+            </div>
+          }
+        </div>
+
+        @if (pedido.direccionEnvio) {
+          <p class="pedido-direccion">
+            📍 {{ pedido.direccionEnvio.direccion }}, {{ pedido.direccionEnvio.ciudad }},
+            {{ pedido.direccionEnvio.departamento }}
+          </p>
+        }
+
+        <div class="pedido-footer">
+          <div class="pedido-totales">
+            <span>Envío: $ {{ pedido.envio || 0 }}</span>
+            <span class="pedido-total">Total: $ {{ pedido.total }}</span>
+          </div>
+
+          <div class="pedido-controles">
+            <label>
+              Estado:
+              <select
+                [ngModel]="pedido.estado"
+                (ngModelChange)="cambiarEstado(pedido, $event)"
+                [disabled]="guardandoId() === pedido._id"
+              >
+                @for (estado of estadosPedido; track estado) {
+                  <option [value]="estado">{{ estado }}</option>
+                }
+              </select>
+            </label>
+
+            <label>
+              Pago:
+              <select
+                [ngModel]="pedido.estadoPago"
+                (ngModelChange)="cambiarEstadoPago(pedido, $event)"
+                [disabled]="guardandoId() === pedido._id"
+              >
+                @for (estadoPago of estadosPago; track estadoPago) {
+                  <option [value]="estadoPago">{{ estadoPago }}</option>
+                }
+              </select>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  }
+
+</div>

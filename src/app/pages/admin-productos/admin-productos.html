@@ -1,0 +1,170 @@
+<div class="admin-page">
+
+  <div class="admin-header">
+    <h1>Gestión de Productos</h1>
+    <button class="btn-primario" (click)="mostrarFormulario.set(!mostrarFormulario())">
+      {{ mostrarFormulario() ? 'Cancelar' : '+ Nuevo producto' }}
+    </button>
+  </div>
+
+  @if (error()) {
+    <p class="error-msg">{{ error() }}</p>
+  }
+
+  @if (mostrarFormulario()) {
+    <div class="form-card form-producto">
+      <h3>Nuevo producto</h3>
+
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="nuevoProducto.nombre" placeholder="Ej. Chocolate Costeño" />
+
+      <label>Descripción</label>
+      <textarea rows="2" [(ngModel)]="nuevoProducto.descripcion" placeholder="Descripción del producto"></textarea>
+
+      <label>Categoría</label>
+      <select [(ngModel)]="nuevoProducto.categoria">
+        <option value="" disabled selected>Selecciona una categoría</option>
+        @for (categoria of categorias(); track categoria._id) {
+          <option [value]="categoria._id">{{ categoria.nombre }}</option>
+        }
+      </select>
+
+      <label>Porcentaje de cacao (opcional)</label>
+      <input type="text" [(ngModel)]="nuevoProducto.porcentajeCacao" placeholder="Ej. 70%" />
+
+      <label>URLs de imágenes (separadas por coma, opcional)</label>
+      <textarea rows="2" [(ngModel)]="nuevoProducto.imagenesTexto" placeholder="https://..., https://..."></textarea>
+
+      <h4>Presentaciones</h4>
+
+      @for (presentacion of presentacionesForm(); track $index) {
+        <div class="fila-presentacion">
+          <input type="text" [(ngModel)]="presentacion.peso" placeholder="Peso (ej. 50g)" />
+          <input type="number" [(ngModel)]="presentacion.precio" placeholder="Precio" />
+          <input type="number" [(ngModel)]="presentacion.stockActual" placeholder="Stock inicial" />
+          <button class="btn-mini" (click)="quitarFilaPresentacion($index)">✕</button>
+        </div>
+      }
+
+      <button class="btn-secundario" (click)="agregarFilaPresentacion()">+ Agregar presentación</button>
+
+      <button class="btn-primario btn-crear" (click)="crearProducto()" [disabled]="guardando()">
+        {{ guardando() ? 'Creando...' : 'Crear producto' }}
+      </button>
+    </div>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje-vacio">Cargando productos...</p>
+  } @else {
+
+    @for (producto of productos(); track producto._id) {
+      <div class="producto-admin-card" [class.inactiva]="!producto.estado">
+
+        <div class="producto-admin-header">
+          <div class="producto-info-imagen">
+
+            @if (producto.imagenes && producto.imagenes.length > 0) {
+              <img [src]="producto.imagenes[0]" [alt]="producto.nombre" class="miniatura-producto" />
+            } @else {
+              <span class="sin-imagen-producto">Sin foto</span>
+            }
+
+            <div>
+              <h3>{{ producto.nombre }}</h3>
+              <p class="categoria-tag">{{ nombreCategoria(producto) }}</p>
+            </div>
+          </div>
+
+          <div class="acciones">
+            <span class="badge" [class.activa]="producto.estado" [class.inactiva-badge]="!producto.estado">
+              {{ producto.estado ? 'Activo' : 'Inactivo' }}
+            </span>
+            <button class="btn-mini" (click)="iniciarEdicionImagenes(producto)">Imágenes</button>
+            <button class="btn-mini" (click)="toggleExpandir(producto._id!)">
+              {{ productoExpandido() === producto._id ? 'Ocultar' : 'Presentaciones' }}
+            </button>
+            <button class="btn-mini" [class.btn-reactivar]="!producto.estado" (click)="toggleEstado(producto)">
+              {{ producto.estado ? 'Desactivar' : 'Reactivar' }}
+            </button>
+          </div>
+        </div>
+
+        @if (imagenesEnEdicion() === producto._id) {
+          <div class="imagenes-panel">
+            <label>URLs de imágenes (separadas por coma)</label>
+            <textarea rows="2" [(ngModel)]="borradorImagenes" placeholder="https://..., https://..."></textarea>
+            <div class="preview-imagenes">
+              @for (url of borradorImagenes.split(','); track $index) {
+                @if (url.trim()) {
+                  <img [src]="url.trim()" class="miniatura-preview" />
+                }
+              }
+            </div>
+            <button class="btn-mini btn-guardar" (click)="guardarImagenes(producto)" [disabled]="guardando()">Guardar</button>
+            <button class="btn-mini" (click)="cancelarEdicionImagenes()">Cancelar</button>
+          </div>
+        }
+
+        @if (productoExpandido() === producto._id) {
+          <div class="presentaciones-panel">
+
+            <table class="admin-tabla mini">
+              <thead>
+                <tr>
+                  <th>Peso</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (presentacion of producto.presentaciones; track presentacion._id) {
+                  <tr [class.inactiva]="!presentacion.estado">
+                    <td>{{ presentacion.peso }}</td>
+                    <td>
+                      <input
+                        type="number"
+                        [value]="presentacion.precio"
+                        (change)="actualizarPrecio(producto, presentacion, $any($event.target).valueAsNumber)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        [value]="presentacion.stockActual"
+                        (change)="actualizarStock(producto, presentacion, $any($event.target).valueAsNumber)"
+                      />
+                    </td>
+                    <td>{{ presentacion.estado ? 'Activa' : 'Inactiva' }}</td>
+                    <td>
+                      <button class="btn-mini" (click)="togglePresentacionEstado(producto, presentacion)">
+                        {{ presentacion.estado ? 'Desactivar' : 'Reactivar' }}
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+            <div class="fila-presentacion nueva-presentacion">
+              <input type="text" [(ngModel)]="nuevaPresentacion.peso" placeholder="Peso (ej. 500g)" />
+              <input type="number" [(ngModel)]="nuevaPresentacion.precio" placeholder="Precio" />
+              <input type="number" [(ngModel)]="nuevaPresentacion.stockActual" placeholder="Stock" />
+              <button class="btn-secundario" (click)="agregarPresentacion(producto)" [disabled]="guardando()">
+                + Agregar
+              </button>
+            </div>
+
+          </div>
+        }
+
+      </div>
+    } @empty {
+      <p class="mensaje-vacio">No hay productos creados todavía.</p>
+    }
+
+  }
+
+</div>

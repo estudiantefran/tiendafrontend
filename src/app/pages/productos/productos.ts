@@ -8,6 +8,11 @@ import { Categoria } from '../../interfaces/categoria';
 
 const TAMANOS_DISPONIBLES = ['50g', '100g', '250g', '500g'];
 
+export interface TarjetaProducto {
+	producto: Producto;
+	presentacion: Presentacion;
+}
+
 @Component({
 	imports: [],
 	selector: 'app-productos',
@@ -33,15 +38,21 @@ export class Productos implements OnInit {
 	paginaActual = signal(1);
 	totalPaginas = signal(1);
 
-	presentacionElegida = signal<Record<string, string>>({});
-
-	productosFiltrados = computed(() => {
+	// Cada presentación activa se convierte en su propia tarjeta, en vez de
+	// agrupar todas las presentaciones de un producto bajo un selector.
+	tarjetas = computed<TarjetaProducto[]>(() => {
 		const tamanos = this.tamanosSeleccionados();
-		if (tamanos.size === 0) return this.productos();
+		const resultado: TarjetaProducto[] = [];
 
-		return this.productos().filter((producto) =>
-			producto.presentaciones?.some((p) => tamanos.has(p.peso))
-		);
+		for (const producto of this.productos()) {
+			for (const presentacion of producto.presentaciones ?? []) {
+				if (!presentacion.estado) continue;
+				if (tamanos.size > 0 && !tamanos.has(presentacion.peso)) continue;
+				resultado.push({ producto, presentacion });
+			}
+		}
+
+		return resultado;
 	});
 
 	ngOnInit() {
@@ -69,7 +80,6 @@ export class Productos implements OnInit {
 			next: (respuesta) => {
 				this.productos.set(respuesta.datos);
 				this.totalPaginas.set(respuesta.paginacion.totalPaginas);
-				this.inicializarPresentaciones(respuesta.datos);
 				this.cargando.set(false);
 			},
 			error: () => {
@@ -77,16 +87,6 @@ export class Productos implements OnInit {
 				this.cargando.set(false);
 			}
 		});
-	}
-
-	private inicializarPresentaciones(productos: Producto[]) {
-		const mapa = { ...this.presentacionElegida() };
-		for (const producto of productos) {
-			if (producto._id && producto.presentaciones?.length && !mapa[producto._id]) {
-				mapa[producto._id] = producto.presentaciones[0]._id!;
-			}
-		}
-		this.presentacionElegida.set(mapa);
 	}
 
 	filtrarPorCategoria(categoriaId: string | null) {
@@ -105,18 +105,9 @@ export class Productos implements OnInit {
 		return this.tamanosSeleccionados().has(tamano);
 	}
 
-	seleccionarPresentacion(productoId: string, presentacionId: string) {
-		this.presentacionElegida.set({ ...this.presentacionElegida(), [productoId]: presentacionId });
-	}
-
-	presentacionDe(producto: Producto): Presentacion | undefined {
-		const id = producto._id ? this.presentacionElegida()[producto._id] : undefined;
-		return producto.presentaciones?.find((p) => p._id === id) ?? producto.presentaciones?.[0];
-	}
-
-	agregarAlCarrito(producto: Producto) {
-		const presentacion = this.presentacionDe(producto);
-		if (!producto._id || !presentacion?._id) return;
+	agregarAlCarrito(tarjeta: TarjetaProducto) {
+		const { producto, presentacion } = tarjeta;
+		if (!producto._id || !presentacion._id) return;
 
 		this.cartService.agregarItem({
 			productoId: producto._id,

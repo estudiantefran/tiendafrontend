@@ -30,6 +30,7 @@ export class ProductoService {
 		return this.http.post(this.URL_producto + '/crearproducto', producto);
 	}
 
+	// Pública (catálogo): solo activos, con filtros y paginación
 	mostrarProductos(filtros?: FiltrosProductos) {
 		let params = new HttpParams();
 
@@ -39,6 +40,13 @@ export class ProductoService {
 		if (filtros?.limit) params = params.set('limit', filtros.limit);
 
 		return this.http.get<RespuestaProductos>(this.URL_producto + '/mostrarproducto', { params });
+	}
+
+	// Admin: todos los productos, activos e inactivos, sin paginar
+	mostrarProductosAdmin() {
+		return this.http.get<{ mensaje: string; datos: Producto[] }>(
+			this.URL_producto + '/mostrarproducto/admin'
+		);
 	}
 
 	actualizarProducto(id: string, productoActualizado: Partial<Producto>) {

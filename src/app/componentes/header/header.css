@@ -187,3 +187,39 @@
   }
 
 }
+/* --- Menú desplegable de Administración --- */
+.admin-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.admin-menu-dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.admin-menu:hover .admin-menu-dropdown,
+.admin-menu:focus-within .admin-menu-dropdown {
+  display: block;
+}
+
+.admin-menu-dropdown a {
+  display: block;
+  padding: 10px 16px;
+  color: #2b1a10;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.admin-menu-dropdown a:hover {
+  background: #fdf6ec;
+  color: #b8862f;
+}

@@ -2,6 +2,7 @@
 
   <div class="header-container">
 
+    <!-- LOGO Y MARCA -->
     <div class="brand">
 
       <a routerLink="/" class="logo">
@@ -16,6 +17,7 @@
     </div>
 
 
+    <!-- BUSCADOR -->
     <div class="header-actions">
 
       <div class="search-box">
@@ -30,8 +32,21 @@
       </div>
 
 
+      <!-- CUENTA -->
       @if (authService.estaLogueado()) {
-        <button class="account-btn" [routerLink]="['/perfil']">
+
+        @if (authService.esAdmin()) {
+          <div class="admin-menu">
+            <button class="account-btn">Admin ▾</button>
+            <div class="admin-menu-dropdown">
+              <a routerLink="/admin/categorias">Categorías</a>
+              <a routerLink="/admin/productos">Productos</a>
+              <a routerLink="/admin/pedidos">Pedidos</a>
+            </div>
+          </div>
+        }
+
+        <button class="account-btn" [routerLink]="['/mis-pedidos']">
           <span>{{ authService.usuarioActual()?.nombre }}</span>
         </button>
         <button class="account-btn" (click)="cerrarSesion()">
@@ -44,6 +59,7 @@
       }
 
 
+      <!-- CARRITO -->
       <button class="cart-btn" [routerLink]="['/carrito']">
 
         <span>Carrito</span>

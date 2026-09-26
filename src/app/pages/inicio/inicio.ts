@@ -10,6 +10,7 @@ import { Producto } from '../../interfaces/producto';
 interface Slide {
 	titulo: string;
 	subtitulo: string;
+	imagen?: string;
 }
 
 @Component({
@@ -29,9 +30,21 @@ export class Inicio implements OnInit {
 	favoritosIds = signal<Set<string>>(new Set());
 
 	slides: Slide[] = [
-		{ titulo: 'Tradición hecha chocolate', subtitulo: 'Cacao artesanal, técnicas tradicionales, sabor único.' },
-		{ titulo: 'Línea Gourmet 70%+', subtitulo: 'Cacao de origen cordobés, tostado a la manera tradicional.' },
-		{ titulo: 'Envíos a toda Colombia', subtitulo: 'Del pueblo a tu mesa, sin perder el sabor artesanal.' },
+		{
+			titulo: 'Tradición hecha chocolate',
+			subtitulo: 'Cacao artesanal, técnicas tradicionales, sabor único.',
+			imagen: 'https://res.cloudinary.com/ahgdoqw3/image/upload/v1790203219/imagen1.webp'
+		},
+		{
+			titulo: 'Línea Gourmet 70%+',
+			subtitulo: 'Cacao de origen cordobés, tostado a la manera tradicional.',
+			imagen: 'https://res.cloudinary.com/ahgdoqw3/image/upload/v1790203233/imagen2.webp'
+		},
+		{
+			titulo: 'Envíos a toda Colombia',
+			subtitulo: 'Del pueblo a tu mesa, sin perder el sabor artesanal.',
+			imagen: 'https://res.cloudinary.com/ahgdoqw3/image/upload/v1790203219/imagen1.webp'
+		},
 	];
 	slideActual = signal(0);
 
@@ -45,7 +58,7 @@ export class Inicio implements OnInit {
 
 	private cargarCategorias() {
 		this.categoriaService.mostrarCategorias().subscribe({
-			next: (respuesta) => this.categorias.set(respuesta.datos.slice(0, 2)),
+			next: (respuesta) => this.categorias.set(respuesta.datos),
 			error: () => this.categorias.set([])
 		});
 	}
@@ -77,7 +90,7 @@ export class Inicio implements OnInit {
 		if (!producto._id) return;
 
 		if (!this.authService.estaLogueado()) {
-			return;
+			return; // El header ya ofrece el link de login; aquí no hacemos nada sin sesión.
 		}
 
 		const id = producto._id;

@@ -1,0 +1,95 @@
+<div class="admin-page">
+
+  <div class="admin-header">
+    <h1>Gestión de Categorías</h1>
+    <button class="btn-primario" (click)="mostrarFormulario.set(!mostrarFormulario())">
+      {{ mostrarFormulario() ? 'Cancelar' : '+ Nueva categoría' }}
+    </button>
+  </div>
+
+  @if (error()) {
+    <p class="error-msg">{{ error() }}</p>
+  }
+
+  @if (mostrarFormulario()) {
+    <div class="form-card">
+      <h3>Nueva categoría</h3>
+
+      <label>Nombre</label>
+      <input type="text" [(ngModel)]="nuevaCategoria.nombre" placeholder="Ej. Chocolate Tradicional" />
+
+      <label>Descripción</label>
+      <textarea rows="2" [(ngModel)]="nuevaCategoria.descripcion" placeholder="Descripción breve"></textarea>
+
+      <label>URL de imagen (opcional)</label>
+      <input type="text" [(ngModel)]="nuevaCategoria.imagen" placeholder="https://res.cloudinary.com/ahgdoqw3/image/upload/v1790203171/figura2.webp
+
+" />
+
+      <button class="btn-primario" (click)="crearCategoria()" [disabled]="guardando()">
+        {{ guardando() ? 'Creando...' : 'Crear categoría' }}
+      </button>
+    </div>
+  }
+
+  @if (cargando()) {
+    <p class="mensaje-vacio">Cargando categorías...</p>
+  } @else {
+
+    <table class="admin-tabla">
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (categoria of categorias(); track categoria._id) {
+          <tr [class.inactiva]="!categoria.estado">
+
+            @if (idEnEdicion() === categoria._id) {
+              <td><input type="text" [(ngModel)]="borradorEdicion.imagen" placeholder="https://res.cloudinary.com/ahgdoqw3/image/upload/v1790203190/figyra1.webp" /></td>
+              <td><input type="text" [(ngModel)]="borradorEdicion.nombre" /></td>
+              <td><input type="text" [(ngModel)]="borradorEdicion.descripcion" /></td>
+              <td>{{ categoria.estado ? 'Activa' : 'Inactiva' }}</td>
+              <td class="acciones">
+                <button class="btn-mini btn-guardar" (click)="guardarEdicion(categoria._id!)" [disabled]="guardando()">Guardar</button>
+                <button class="btn-mini" (click)="cancelarEdicion()">Cancelar</button>
+              </td>
+            } @else {
+              <td>
+                @if (categoria.imagen) {
+                  <img [src]="categoria.imagen" [alt]="categoria.nombre" class="miniatura" />
+                } @else {
+                  <span class="sin-imagen">—</span>
+                }
+              </td>
+              <td>{{ categoria.nombre }}</td>
+              <td>{{ categoria.descripcion }}</td>
+
+              <td>
+                <span class="badge" [class.activa]="categoria.estado" [class.inactiva-badge]="!categoria.estado">
+                  {{ categoria.estado ? 'Activa' : 'Inactiva' }}
+                </span>
+              </td>
+              <td class="acciones">
+                <button class="btn-mini" (click)="iniciarEdicion(categoria)">Editar</button>
+                <button class="btn-mini" [class.btn-reactivar]="!categoria.estado" (click)="toggleEstado(categoria)">
+                  {{ categoria.estado ? 'Desactivar' : 'Reactivar' }}
+                </button>
+              </td>
+            }
+
+          </tr>
+        } @empty {
+          <tr><td colspan="4" class="mensaje-vacio">No hay categorías creadas todavía.</td></tr>
+        }
+      </tbody>
+    </table>
+
+  }
+
+</div>

@@ -1,0 +1,140 @@
+.mis-pedidos-page {
+  padding: 40px 60px;
+  background: #fdf6ec;
+  min-height: 60vh;
+}
+
+.mis-pedidos-page h1 {
+  color: #2b1a10;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.sin-pedidos {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.sin-pedidos p {
+  color: #6b4f2a;
+  margin-bottom: 16px;
+}
+
+.btn-primario {
+  display: inline-block;
+  background: #2b1a10;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.pedido-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e0d4bf;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.pedido-fecha {
+  color: #2b1a10;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.pedido-id {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.estado-pendiente { background: #b8862f; }
+.estado-preparando { background: #d8a94f; }
+.estado-enviado { background: #4a7fb5; }
+.estado-entregado { background: #1e7e34; }
+.estado-cancelado { background: #c0392b; }
+
+.pedido-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  color: #4a3826;
+  font-size: 0.9rem;
+}
+
+.pedido-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e0d4bf;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pedido-totales {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #4a3826;
+}
+
+.pedido-total {
+  font-weight: 700;
+  color: #2b1a10;
+}
+
+.pedido-acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pago-badge {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.pago-badge.pagado {
+  color: #1e7e34;
+  font-weight: 600;
+}
+
+.btn-cancelar {
+  background: none;
+  border: 1px solid #c0392b;
+  color: #c0392b;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-cancelar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mensaje-vacio {
+  color: #999;
+  font-style: italic;
+}

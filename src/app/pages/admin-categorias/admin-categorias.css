@@ -1,0 +1,168 @@
+.admin-page {
+  padding: 40px 60px;
+  background: #fdf6ec;
+  min-height: 60vh;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-header h1 {
+  color: #2b1a10;
+  font-weight: 400;
+}
+
+.btn-primario {
+  background: #2b1a10;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  max-width: 480px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.form-card h3 {
+  color: #2b1a10;
+  margin-bottom: 12px;
+}
+
+.form-card label {
+  display: block;
+  font-size: 0.85rem;
+  color: #4a3826;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e0d4bf;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.form-card .btn-primario {
+  margin-top: 16px;
+}
+
+.admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.admin-tabla th {
+  background: #2b1a10;
+  color: #fff;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+}
+
+.admin-tabla td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0e8d8;
+  font-size: 0.9rem;
+  color: #4a3826;
+}
+
+.admin-tabla tr.inactiva {
+  opacity: 0.55;
+}
+
+.admin-tabla input {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #e0d4bf;
+  border-radius: 4px;
+}
+
+.badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badge.activa { background: #1e7e34; }
+.badge.inactiva-badge { background: #999; }
+
+.acciones {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-mini {
+  background: #fff;
+  border: 1px solid #e0d4bf;
+  color: #2b1a10;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.btn-mini.btn-guardar {
+  background: #1e7e34;
+  color: #fff;
+  border: none;
+}
+
+.btn-mini.btn-reactivar {
+  background: #1e7e34;
+  color: #fff;
+  border: none;
+}
+
+.error-msg {
+  background: #fce8e6;
+  color: #c0392b;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.mensaje-vacio {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+.miniatura {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.sin-imagen {
+  color: #ccc;
+}

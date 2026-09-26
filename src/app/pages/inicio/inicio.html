@@ -1,5 +1,8 @@
-
-<section class="hero">
+<!-- HERO / CARRUSEL -->
+<section
+  class="hero"
+  [style.background-image]="'linear-gradient(rgba(43,26,16,0.55), rgba(43,26,16,0.65)), url(' + slides[slideActual()].imagen + ')'"
+>
 
   <button class="hero-arrow hero-arrow-left" (click)="anteriorSlide()" aria-label="Anterior">‹</button>
 
@@ -23,12 +26,13 @@
 </section>
 
 
+<!-- CATEGORIAS -->
 <section class="categorias-section">
 
   <h2>Nuestras Categorías</h2>
 
   <div class="categorias-grid">
-    @for (categoria of categorias(); track categoria._id) {
+    @for (categoria of categorias(); track categoria._id; let i = $index) {
       <div class="categoria-card">
         <div class="categoria-imagen">
           @if (categoria.imagen) {
@@ -40,7 +44,7 @@
         <h3>{{ categoria.nombre }}</h3>
         <p>{{ categoria.descripcion }}</p>
         <a [routerLink]="['/productos']" [queryParams]="{ categoria: categoria._id }">
-          Ver Selección ➔
+          {{ i === 0 ? 'VER GRAMAJES' : 'VER SELECCIÓN' }} ➔
         </a>
       </div>
     } @empty {
@@ -51,6 +55,7 @@
 </section>
 
 
+<!-- PRODUCTOS DESTACADOS -->
 <section class="destacados-section">
 
   <h2>Productos Destacados</h2>
@@ -90,4 +95,4 @@
     }
   </div>
 
-</section>      
+</section>

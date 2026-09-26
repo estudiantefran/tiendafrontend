@@ -1,0 +1,66 @@
+<div class="mis-pedidos-page">
+
+  <h1>Mis Pedidos</h1>
+
+  @if (cargando()) {
+    <p class="mensaje-vacio">Cargando tus pedidos...</p>
+  } @else if (pedidos().length === 0) {
+    <div class="sin-pedidos">
+      <p>Todavía no has hecho ningún pedido.</p>
+      <a routerLink="/productos" class="btn-primario">Ver catálogo</a>
+    </div>
+  } @else {
+
+    @for (pedido of pedidos(); track pedido._id) {
+      <div class="pedido-card">
+
+        <div class="pedido-header">
+          <div>
+            <span class="pedido-fecha">
+              {{ pedido.createdAt | date: 'dd MMM yyyy, h:mm a' }}
+            </span>
+            <span class="pedido-id">#{{ pedido._id?.slice(-6) }}</span>
+          </div>
+          <span class="badge" [class]="claseEstado(pedido.estado)">
+            {{ pedido.estado }}
+          </span>
+        </div>
+
+        <div class="pedido-productos">
+          @for (item of pedido.productos; track item.presentacion) {
+            <div class="pedido-item">
+              <span>{{ nombreProducto(item) }} ({{ item.peso }}) x{{ item.cantidad }}</span>
+              <span>$ {{ item.precio * item.cantidad }}</span>
+            </div>
+          }
+        </div>
+
+        <div class="pedido-footer">
+          <div class="pedido-totales">
+            <span>Envío: $ {{ pedido.envio || 0 }}</span>
+            <span class="pedido-total">Total: $ {{ pedido.total }}</span>
+          </div>
+
+          <div class="pedido-acciones">
+            <span class="pago-badge" [class.pagado]="pedido.estadoPago === 'Aprobado'">
+              Pago: {{ pedido.estadoPago }}
+            </span>
+
+            @if (puedeCancelar(pedido)) {
+              <button
+                class="btn-cancelar"
+                (click)="cancelarPedido(pedido)"
+                [disabled]="cancelandoId() === pedido._id"
+              >
+                {{ cancelandoId() === pedido._id ? 'Cancelando...' : 'Cancelar pedido' }}
+              </button>
+            }
+          </div>
+        </div>
+
+      </div>
+    }
+
+  }
+
+</div>

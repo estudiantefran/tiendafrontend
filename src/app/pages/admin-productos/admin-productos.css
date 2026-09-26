@@ -1,0 +1,291 @@
+.admin-page {
+  padding: 40px 60px;
+  background: #fdf6ec;
+  min-height: 60vh;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.admin-header h1 {
+  color: #2b1a10;
+  font-weight: 400;
+}
+
+.btn-primario {
+  background: #2b1a10;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secundario {
+  background: #fff;
+  border: 1px solid #d8a94f;
+  color: #b8862f;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+  max-width: 560px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.form-card h3 {
+  color: #2b1a10;
+  margin-bottom: 12px;
+}
+
+.form-card h4 {
+  color: #b8862f;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.form-card label {
+  display: block;
+  font-size: 0.85rem;
+  color: #4a3826;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.form-card input,
+.form-card textarea,
+.form-card select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e0d4bf;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.btn-crear {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.fila-presentacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.fila-presentacion input {
+  padding: 6px 8px;
+  border: 1px solid #e0d4bf;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.nueva-presentacion {
+  margin-top: 14px;
+  grid-template-columns: 1fr 1fr 1fr auto;
+}
+
+.producto-admin-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.producto-admin-card.inactiva {
+  opacity: 0.55;
+}
+
+.producto-admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.producto-info-imagen {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.miniatura-producto {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.sin-imagen-producto {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  background: #f0e8d8;
+  color: #bbb;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.imagenes-panel {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #f0e8d8;
+}
+
+.imagenes-panel label {
+  display: block;
+  font-size: 0.85rem;
+  color: #4a3826;
+  margin-bottom: 4px;
+}
+
+.imagenes-panel textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e0d4bf;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.preview-imagenes {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.miniatura-preview {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #e0d4bf;
+}
+
+.producto-admin-header h3 {
+  color: #2b1a10;
+  font-size: 1.05rem;
+  margin-bottom: 2px;
+}
+
+.categoria-tag {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.badge.activa { background: #1e7e34; }
+.badge.inactiva-badge { background: #999; }
+
+.btn-mini {
+  background: #fff;
+  border: 1px solid #e0d4bf;
+  color: #2b1a10;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.btn-mini.btn-reactivar {
+  background: #1e7e34;
+  color: #fff;
+  border: none;
+}
+
+.presentaciones-panel {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #f0e8d8;
+}
+
+.admin-tabla.mini {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.admin-tabla.mini th {
+  background: #fdf6ec;
+  color: #2b1a10;
+  text-align: left;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+}
+
+.admin-tabla.mini td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #f0e8d8;
+  font-size: 0.85rem;
+  color: #4a3826;
+}
+
+.admin-tabla.mini tr.inactiva {
+  opacity: 0.5;
+}
+
+.admin-tabla.mini input {
+  width: 90px;
+  padding: 4px 6px;
+  border: 1px solid #e0d4bf;
+  border-radius: 4px;
+}
+
+.error-msg {
+  background: #fce8e6;
+  color: #c0392b;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.mensaje-vacio {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}

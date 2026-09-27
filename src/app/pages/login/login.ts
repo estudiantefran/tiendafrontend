@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { LoginService } from '../../services/login.service';
+import { ToastService } from '../../services/toast';
 
 @Component({
   imports: [FormsModule],
@@ -14,6 +15,7 @@ export class Login {
   private authService = inject(AuthService);
   private loginService = inject(LoginService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   pestanaActiva = signal<'login' | 'registro'>('login');
   cargando = signal(false);
@@ -48,6 +50,7 @@ export class Login {
     this.authService.login(this.credencialesLogin).subscribe({
       next: () => {
         this.cargando.set(false);
+        this.toastService.exito('Inicio de sesión exitoso.');
         this.router.navigate(['/']);
       },
       error: (respuesta) => {
@@ -78,12 +81,14 @@ export class Login {
         this.authService.login({ email, password }).subscribe({
           next: () => {
             this.cargando.set(false);
+            this.toastService.exito('Cuenta creada correctamente.');
             this.router.navigate(['/']);
           },
           error: () => {
             this.cargando.set(false);
             this.pestanaActiva.set('login');
             this.error.set('Cuenta creada. Ahora inicia sesión.');
+            this.toastService.exito('Cuenta creada. Ahora inicia sesión.');
           }
         });
       },

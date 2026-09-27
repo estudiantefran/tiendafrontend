@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { PedidoService } from '../../services/pedido.service';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast';
 
 const COSTO_ENVIO = 8000;
 
@@ -18,6 +19,7 @@ export class Carrito {
 	authService = inject(AuthService);
 	private pedidoService = inject(PedidoService);
 	private router = inject(Router);
+	private toastService = inject(ToastService);
 
 	metodoPago = signal('Contraentrega');
 
@@ -45,6 +47,7 @@ export class Carrito {
 
 	quitarItem(productoId: string, presentacionId: string) {
 		this.cartService.quitarItem(productoId, presentacionId);
+		this.toastService.info('Producto retirado del carrito.');
 	}
 
 	confirmarPedido() {
@@ -73,6 +76,7 @@ export class Carrito {
 				this.cargando.set(false);
 				this.pedidoConfirmado.set(true);
 				this.cartService.vaciarCarrito();
+				this.toastService.exito('Pedido registrado correctamente.');
 
 				setTimeout(() => {
 					this.router.navigate(['/']);

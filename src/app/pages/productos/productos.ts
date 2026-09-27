@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartService } from '../../services/cart.service';
+import { ToastService } from '../../services/toast';
 import { Producto, Presentacion } from '../../interfaces/producto';
 import { Categoria } from '../../interfaces/categoria';
 
@@ -23,6 +24,7 @@ export class Productos implements OnInit {
 	private productoService = inject(ProductoService);
 	private categoriaService = inject(CategoriaService);
 	private cartService = inject(CartService);
+	private toastService = inject(ToastService);
 	private route = inject(ActivatedRoute);
 
 	categorias = signal<Categoria[]>([]);
@@ -118,6 +120,7 @@ export class Productos implements OnInit {
 			imagen: producto.imagenes?.[0],
 			cantidad: 1
 		});
+		this.toastService.exito(`${producto.nombre} se agregó al carrito.`);
 	}
 
 	cambiarPagina(nuevaPagina: number) {

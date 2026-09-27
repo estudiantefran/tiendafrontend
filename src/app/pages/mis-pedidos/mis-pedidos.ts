@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { PedidoService } from '../../services/pedido.service';
 import { Pedido } from '../../interfaces/pedido';
+import { ToastService } from '../../services/toast';
 
 @Component({
 	imports: [RouterLink, DatePipe],
@@ -12,6 +13,7 @@ import { Pedido } from '../../interfaces/pedido';
 })
 export class MisPedidos implements OnInit {
 	private pedidoService = inject(PedidoService);
+	private toastService = inject(ToastService);
 
 	pedidos = signal<Pedido[]>([]);
 	cargando = signal(true);
@@ -54,11 +56,12 @@ export class MisPedidos implements OnInit {
 		this.pedidoService.cancelarPedido(pedido._id).subscribe({
 			next: () => {
 				this.cancelandoId.set(null);
+				this.toastService.exito('Pedido cancelado correctamente.');
 				this.cargarPedidos();
 			},
 			error: () => {
 				this.cancelandoId.set(null);
-				alert('No se pudo cancelar el pedido.');
+				this.toastService.error('No se pudo cancelar el pedido.');
 			}
 		});
 	}

@@ -4,6 +4,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { ProductoService } from '../../services/producto.service';
 import { FavoritoService } from '../../services/favorito.service';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast';
 import { Categoria } from '../../interfaces/categoria';
 import { Producto } from '../../interfaces/producto';
 
@@ -23,6 +24,7 @@ export class Inicio implements OnInit {
 	private categoriaService = inject(CategoriaService);
 	private productoService = inject(ProductoService);
 	private favoritoService = inject(FavoritoService);
+	private toastService = inject(ToastService);
 	authService = inject(AuthService);
 
 	categorias = signal<Categoria[]>([]);
@@ -103,9 +105,21 @@ export class Inicio implements OnInit {
 		};
 
 		if (yaEsFavorito) {
-			this.favoritoService.quitarFavorito(id).subscribe({ next: () => actualizar(false) });
+			this.favoritoService.quitarFavorito(id).subscribe({
+				next: () => {
+					actualizar(false);
+					this.toastService.info('Producto retirado de favoritos.');
+				},
+				error: () => this.toastService.error('No se pudo retirar de favoritos.')
+			});
 		} else {
-			this.favoritoService.agregarFavorito(id).subscribe({ next: () => actualizar(true) });
+			this.favoritoService.agregarFavorito(id).subscribe({
+				next: () => {
+					actualizar(true);
+					this.toastService.exito('Producto agregado a favoritos.');
+				},
+				error: () => this.toastService.error('No se pudo agregar a favoritos.')
+			});
 		}
 	}
 

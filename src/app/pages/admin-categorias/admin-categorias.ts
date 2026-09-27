@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../interfaces/categoria';
+import { ToastService } from '../../services/toast';
 
 @Component({
 	imports: [FormsModule],
@@ -11,6 +12,7 @@ import { Categoria } from '../../interfaces/categoria';
 })
 export class AdminCategorias implements OnInit {
 	private categoriaService = inject(CategoriaService);
+	private toastService = inject(ToastService);
 
 	categorias = signal<Categoria[]>([]);
 	cargando = signal(true);
@@ -57,6 +59,7 @@ export class AdminCategorias implements OnInit {
 				this.guardando.set(false);
 				this.nuevaCategoria = { nombre: '', descripcion: '', imagen: '' };
 				this.mostrarFormulario.set(false);
+				this.toastService.exito('Categoría creada correctamente.');
 				this.cargarCategorias();
 			},
 			error: (respuesta) => {
@@ -86,6 +89,7 @@ export class AdminCategorias implements OnInit {
 			next: () => {
 				this.guardando.set(false);
 				this.cancelarEdicion();
+				this.toastService.exito('Categoría actualizada correctamente.');
 				this.cargarCategorias();
 			},
 			error: (respuesta) => {
@@ -101,13 +105,19 @@ export class AdminCategorias implements OnInit {
 		if (categoria.estado) {
 			// Desactivar: usa el endpoint de "eliminar" (soft delete)
 			this.categoriaService.eliminarCategoria(categoria._id).subscribe({
-				next: () => this.cargarCategorias(),
+				next: () => {
+					this.toastService.info('Categoría desactivada.');
+					this.cargarCategorias();
+				},
 				error: (respuesta) => this.error.set(respuesta.error?.mensaje || 'No se pudo desactivar.')
 			});
 		} else {
 			// Reactivar: se hace con un PUT normal
 			this.categoriaService.actualizarCategoria(categoria._id, { estado: true }).subscribe({
-				next: () => this.cargarCategorias(),
+				next: () => {
+					this.toastService.exito('Categoría reactivada.');
+					this.cargarCategorias();
+				},
 				error: () => this.error.set('No se pudo reactivar la categoría.')
 			});
 		}

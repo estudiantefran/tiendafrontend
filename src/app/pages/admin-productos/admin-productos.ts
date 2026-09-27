@@ -4,6 +4,7 @@ import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { Producto, Presentacion } from '../../interfaces/producto';
 import { Categoria } from '../../interfaces/categoria';
+import { ToastService } from '../../services/toast';
 
 interface PresentacionForm {
 	peso: string;
@@ -20,6 +21,7 @@ interface PresentacionForm {
 export class AdminProductos implements OnInit {
 	private productoService = inject(ProductoService);
 	private categoriaService = inject(CategoriaService);
+	private toastService = inject(ToastService);
 
 	productos = signal<Producto[]>([]);
 	categorias = signal<Categoria[]>([]);
@@ -70,6 +72,7 @@ export class AdminProductos implements OnInit {
 			next: () => {
 				this.guardando.set(false);
 				this.cancelarEdicionImagenes();
+					this.toastService.exito('Imágenes actualizadas correctamente.');
 				this.cargarProductos();
 			},
 			error: () => {
@@ -158,6 +161,7 @@ export class AdminProductos implements OnInit {
 				this.nuevoProducto = { nombre: '', descripcion: '', categoria: '', porcentajeCacao: '', imagenesTexto: '' };
 				this.presentacionesForm.set([this.presentacionVacia()]);
 				this.mostrarFormulario.set(false);
+				this.toastService.exito('Producto creado correctamente.');
 				this.cargarProductos();
 			},
 			error: (respuesta) => {
@@ -172,12 +176,18 @@ export class AdminProductos implements OnInit {
 
 		if (producto.estado) {
 			this.productoService.eliminarProducto(producto._id).subscribe({
-				next: () => this.cargarProductos(),
+				next: () => {
+					this.toastService.info('Producto desactivado.');
+					this.cargarProductos();
+				},
 				error: () => this.error.set('No se pudo desactivar el producto.')
 			});
 		} else {
 			this.productoService.actualizarProducto(producto._id, { estado: true } as Partial<Producto>).subscribe({
-				next: () => this.cargarProductos(),
+				next: () => {
+					this.toastService.exito('Producto reactivado.');
+					this.cargarProductos();
+				},
 				error: () => this.error.set('No se pudo reactivar el producto.')
 			});
 		}
@@ -204,6 +214,7 @@ export class AdminProductos implements OnInit {
 			next: () => {
 				this.guardando.set(false);
 				this.nuevaPresentacion = this.presentacionVacia();
+				this.toastService.exito('Presentación agregada correctamente.');
 				this.cargarProductos();
 			},
 			error: (respuesta) => {
@@ -219,7 +230,10 @@ export class AdminProductos implements OnInit {
 		this.productoService.actualizarPresentacion(producto._id, presentacion._id, {
 			stockActual: nuevoStock
 		}).subscribe({
-			next: () => this.cargarProductos(),
+			next: () => {
+				this.toastService.exito('Stock actualizado correctamente.');
+				this.cargarProductos();
+			},
 			error: () => this.error.set('No se pudo actualizar el stock.')
 		});
 	}
@@ -230,7 +244,10 @@ export class AdminProductos implements OnInit {
 		this.productoService.actualizarPresentacion(producto._id, presentacion._id, {
 			precio: nuevoPrecio
 		}).subscribe({
-			next: () => this.cargarProductos(),
+			next: () => {
+				this.toastService.exito('Precio actualizado correctamente.');
+				this.cargarProductos();
+			},
 			error: () => this.error.set('No se pudo actualizar el precio.')
 		});
 	}
@@ -240,12 +257,18 @@ export class AdminProductos implements OnInit {
 
 		if (presentacion.estado) {
 			this.productoService.eliminarPresentacion(producto._id, presentacion._id).subscribe({
-				next: () => this.cargarProductos(),
+				next: () => {
+					this.toastService.info('Presentación desactivada.');
+					this.cargarProductos();
+				},
 				error: () => this.error.set('No se pudo desactivar la presentación.')
 			});
 		} else {
 			this.productoService.actualizarPresentacion(producto._id, presentacion._id, { estado: true }).subscribe({
-				next: () => this.cargarProductos(),
+				next: () => {
+					this.toastService.exito('Presentación reactivada.');
+					this.cargarProductos();
+				},
 				error: () => this.error.set('No se pudo reactivar la presentación.')
 			});
 		}

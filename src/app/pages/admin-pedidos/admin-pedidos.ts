@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { PedidoService } from '../../services/pedido.service';
 import { Pedido, EstadoPedido, EstadoPago } from '../../interfaces/pedido';
+import { ToastService } from '../../services/toast';
 
 const ESTADOS_PEDIDO: EstadoPedido[] = ['Pendiente', 'Preparando', 'Enviado', 'Entregado', 'Cancelado'];
 const ESTADOS_PAGO: EstadoPago[] = ['Pendiente', 'Aprobado', 'Rechazado', 'Reembolsado'];
@@ -15,6 +16,7 @@ const ESTADOS_PAGO: EstadoPago[] = ['Pendiente', 'Aprobado', 'Rechazado', 'Reemb
 })
 export class AdminPedidos implements OnInit {
 	private pedidoService = inject(PedidoService);
+	private toastService = inject(ToastService);
 
 	pedidos = signal<Pedido[]>([]);
 	cargando = signal(true);
@@ -60,6 +62,7 @@ export class AdminPedidos implements OnInit {
 		this.pedidoService.actualizarPedido(pedido._id, { estado: nuevoEstado }).subscribe({
 			next: () => {
 				this.guardandoId.set(null);
+				this.toastService.exito(`Estado del pedido actualizado a ${nuevoEstado}.`);
 				this.cargarPedidos();
 			},
 			error: () => {
@@ -76,6 +79,7 @@ export class AdminPedidos implements OnInit {
 		this.pedidoService.actualizarPedido(pedido._id, { estadoPago: nuevoEstadoPago }).subscribe({
 			next: () => {
 				this.guardandoId.set(null);
+				this.toastService.exito(`Estado de pago actualizado a ${nuevoEstadoPago}.`);
 				this.cargarPedidos();
 			},
 			error: () => {

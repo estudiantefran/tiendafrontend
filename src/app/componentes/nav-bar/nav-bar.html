@@ -2,15 +2,15 @@
 
   <div class="navbar-container">
 
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="ui.cerrarMobileMenu()">
       INICIO
     </a>
 
-    <a routerLink="/productos" routerLinkActive="active">
+    <a routerLink="/productos" routerLinkActive="active" (click)="ui.cerrarMobileMenu()">
       PRODUCTOS
     </a>
 
-    <a routerLink="/nosotros" routerLinkActive="active">
+    <a routerLink="/nosotros" routerLinkActive="active" (click)="ui.cerrarMobileMenu()">
       NOSOTROS
     </a>
 

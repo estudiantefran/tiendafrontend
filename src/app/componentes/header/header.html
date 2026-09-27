@@ -39,28 +39,28 @@
           <div class="admin-menu">
             <button class="account-btn">Admin ▾</button>
             <div class="admin-menu-dropdown">
-              <a routerLink="/admin/categorias">Categorías</a>
-              <a routerLink="/admin/productos">Productos</a>
-              <a routerLink="/admin/pedidos">Pedidos</a>
+              <a routerLink="/admin/categorias" (click)="ui.cerrarMobileMenu()">Categorías</a>
+              <a routerLink="/admin/productos" (click)="ui.cerrarMobileMenu()">Productos</a>
+              <a routerLink="/admin/pedidos" (click)="ui.cerrarMobileMenu()">Pedidos</a>
             </div>
           </div>
         }
 
-        <button class="account-btn" [routerLink]="['/mis-pedidos']">
+        <button class="account-btn" [routerLink]="['/mis-pedidos']" (click)="ui.cerrarMobileMenu()">
           <span>{{ authService.usuarioActual()?.nombre }}</span>
         </button>
         <button class="account-btn" (click)="cerrarSesion()">
           <span>Salir</span>
         </button>
       } @else {
-        <button class="account-btn" [routerLink]="['/login']">
+        <button class="account-btn" [routerLink]="['/login']" (click)="ui.cerrarMobileMenu()">
           <span>Mi cuenta</span>
         </button>
       }
 
 
       <!-- CARRITO -->
-      <button class="cart-btn" [routerLink]="['/carrito']">
+      <button class="cart-btn" [routerLink]="['/carrito']" (click)="ui.cerrarMobileMenu()">
 
         <span>Carrito</span>
 
@@ -71,6 +71,15 @@
       </button>
 
     </div>
+
+    <!-- BOTON HAMBURGUESA (solo visible en pantallas pequeñas) -->
+    <button
+      class="hamburguesa"
+      (click)="ui.toggleMobileMenu()"
+      [attr.aria-label]="ui.mobileMenuOpen() ? 'Cerrar menú' : 'Abrir menú'"
+    >
+      {{ ui.mobileMenuOpen() ? '✕' : '☰' }}
+    </button>
 
   </div>
 

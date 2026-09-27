@@ -156,38 +156,123 @@
 }
 
 
-@media (max-width: 900px) {
-
-  .header-container {
-    flex-direction: column;
-    gap: 25px;
-  }
-
-  .header-actions {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
+/* --- Botón hamburguesa: oculto en escritorio --- */
+.hamburguesa {
+  display: none;
+  background: none;
+  border: none;
+  color: #e5b85c;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
 }
 
 
-@media (max-width: 600px) {
+/* --- Responsive: menú hamburguesa a partir de 860px --- */
+@media (max-width: 860px) {
 
   .header {
-    padding: 20px;
+    padding: 18px 20px 0;
+  }
+
+  .header-container {
+    flex-wrap: wrap;
+    border-bottom: none;
+    padding-bottom: 0;
+    gap: 14px;
   }
 
   .brand {
     width: 100%;
+    order: 1;
+    justify-content: flex-start;
+    padding-top: 4px;
+  }
+
+  .brand-text h1 {
+    font-size: clamp(1.8rem, 4.6vw, 2.7rem);
+    line-height: 1.1;
+  }
+
+  .brand-text p {
+    font-size: 14px;
+  }
+
+  .hamburguesa {
+    display: block;
+    order: 0;
+    margin-left: auto;
+    font-size: 34px;
+  }
+
+  .header-actions {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    order: 2;
+    margin-top: 8px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(229, 184, 92, 0.15);
+  }
+
+  :host-context(.site-header.mobile-open) .header-actions {
+    display: flex;
   }
 
   .search-box {
     width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    order: 0;
+    height: 50px;
+    border-radius: 999px;
+    box-sizing: border-box;
+  }
+
+  .account-btn,
+  .cart-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 58px;
+    border-radius: 999px;
+    font-size: 1.1rem;
+  }
+
+  .admin-menu {
+    width: 100%;
+    display: block;
+  }
+
+  .admin-menu .account-btn {
+    width: 100%;
+  }
+
+  .admin-menu-dropdown {
+    display: block;
+    position: static;
+    box-shadow: none;
+    background: transparent;
+    padding-left: 12px;
+    margin-top: 6px;
+  }
+
+  .admin-menu-dropdown a {
+    color: #e5b85c;
+    padding: 8px 10px;
+  }
+
+  .admin-menu-dropdown a:hover {
+    background: none;
+    color: #fff;
   }
 
 }
-/* --- Menú desplegable de Administración --- */
+
+/* --- Menú desplegable de Administración (escritorio) --- */
 .admin-menu {
   position: relative;
   display: inline-block;

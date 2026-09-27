@@ -1,0 +1,21 @@
+.site-header {
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .site-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .site-header > app-nav-bar {
+    order: 1;
+    width: 100%;
+  }
+
+  .site-header > app-header {
+    order: 2;
+    width: 100%;
+  }
+}

@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { App } from './app';
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [App],
+      imports: [App, RouterTestingModule],
     }).compileComponents();
   });
 
@@ -14,10 +15,14 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should render the app shell', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
+    fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, appfront');
+
+    expect(compiled.querySelector('app-header')).not.toBeNull();
+    expect(compiled.querySelector('app-nav-bar')).not.toBeNull();
+    expect(compiled.querySelector('main')).not.toBeNull();
+    expect(compiled.querySelector('app-footer')).not.toBeNull();
   });
 });
